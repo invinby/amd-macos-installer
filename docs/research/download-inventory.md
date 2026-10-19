@@ -30,10 +30,17 @@
 - SHA-256 BaseSystem.chunklist: `7FF09B6DA279E30BBA9971AD2F3A98431213B508BF8BE860EF53126824C38908`.
 - Это Recovery-среда, не полный установщик. При загрузке гостя установщик получает остальные файлы с серверов Apple.
 
+
+## QEMU for Windows 11.1.0 (conversion dependency)
+
+- Источник: [страница загрузок QEMU](https://www.qemu.org/download/#windows) направляет на официально упомянутые Windows builds Stefan Weil.
+- Установщик: `downloads/third-party/qemu-windows-11.1.0/qemu-w64-setup-20260811.exe`, 206,615,928 байт.
+- SHA-512: `5BCF9EED634E8575A37B74F445AF41A2FE4106DA512D0C30C368301D4C105037FDFAB40A5287367A28A957624CDDEBBC8C07E16C88AB6634F554CDF3D16BF543` — совпал с manifest рядом.
+- SHA-256: `F98A8AEB5F7FAEA9765B6DEE28316C266CD179D80354A2FED8E50176F9A2E59F` — независимо совпал с manifest пакета WinGet `SoftwareFreedomConservancy.QEMU`.
+- Authenticode подпись показывает издателя Universität Mannheim, но срок сертификата закончился в 2023; Windows status `UnknownError`. Установщик пока не запускался. Сборка нужна только для qemu-img, чтобы подготовить Recovery VMDK.
 ## Пока не скачано
 
-- VMware Workstation installer: официальный Broadcom download требует входа в Support Portal и подтверждения условий загрузки. Страница портала открыта в браузере; пользователь должен войти и сам подтвердить условия, после чего можно продолжить загрузку.
+- VMware Workstation installer: пока не скачан. Официальный Broadcom download перенаправляет на вход, требует принять условия загрузки и иногда отдельную Trade Compliance проверку.
 - Полный macOS installer и рабочая VM пока отсутствуют.
 
 Системные образы и созданные VM не коммитить в Git.
-
