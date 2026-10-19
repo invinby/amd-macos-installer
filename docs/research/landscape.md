@@ -16,8 +16,8 @@
 
 | Проект | Что реально автоматизирует | Ограничения |
 |---|---|---|
-| [OpCore Simplify](https://github.com/lzhoang2801/OpCore-Simplify) | Проверка отчёта о железе, подбор настроек/ACPI/kexts и генерация стартовой EFI; работает на Windows; workflow использует отдельный UnPlugged для USB installer. | Это EFI builder, не драйверогенератор. README перечисляет AMD APU семейства Vega (Ryzen 1000–5000, 7x30), но не Rembrandt 680M. Автор намеренно не форсирует несовместимую GPU ради медленного VESA. |
-| [UnPlugged](https://github.com/lzhoang2801/UnPlugged) | Создание macOS installer USB на Windows в связке с OpCore Simplify. | Не решает аппаратную совместимость и отсутствие графических драйверов. |
+| [OpCore Simplify](https://github.com/lzhoang2801/OpCore-Simplify) | Проверка отчёта о железе, подбор настроек/ACPI/kexts и генерация стартовой EFI; работает на Windows. Отдельные USB/Recovery workflow относятся к подготовке installer, а не к VM. | Это EFI builder, не драйверогенератор. README перечисляет AMD APU семейства Vega (Ryzen 1000–5000, 7x30), но не Rembrandt 680M. Автор намеренно не форсирует несовместимую GPU ради медленного VESA. |
+| [UnPlugged](https://github.com/corpnewt/UnPlugged) | Bash-скрипт для запуска из macOS Recovery и подготовки полного installer. | Не Windows-утилита, не VM-гипервизор и не решение аппаратной совместимости. Для первого VM-этапа не нужен. |
 | [OpenCore Auxiliary Tools (OCAT)](https://github.com/ic005k/OCAuxiliaryTools) | GUI для редактирования/проверки config.plist, обновления OpenCore/kexts, генерации EFI-папки из настроенного конфига. | Конфигуратор, не полноценный hardware-aware мастер и не решение для отсутствующего драйвера. Dortania предостерегает от слепой зависимости от configurators. |
 | [AMD Vanilla OpenCore patches](https://github.com/AMD-OSX/AMD_Vanilla) | Kernel patches для запуска macOS на AMD CPU, включая Ryzen 17h/19h. | Не GPU-драйвер. Не делает ноутбучные AMD CPUs официально совместимыми по Dortania и не поддерживает автоматически 680M. |
 | [HackinOS OpenCore Builder](https://github.com/ihackinOS/OpenCoreBuilder) | Небольшой сторонний проект заявляет GUI-сборку EFI и профили AMD/Intel. | Не найдено убедительного подтверждения поддержки Ryzen 6000 mobile / Rembrandt / G513RM. Нужен отдельный аудит исходников и реального результата. |
@@ -89,7 +89,7 @@
 
 ## Охват и неизвестные места
 
-Проверены на 2026-10-19: Dortania OpenCore Install Guide, Hardware Limitations, AMD guide, GPU Buyers Guide и Wireless Buyers Guide; GitHub README/issues/projects AMD_Vanilla, ChefKissInc/NootedRed, ChefKissInc/NootRX, lzhoang2801/OpCore-Simplify, UnPlugged, OCAuxiliaryTools, HackinOS OpenCoreBuilder и RedmiBookPro2022 EFI; targeted searches по G513RM, 6800H, 680M, Rembrandt, OpenCore и macOS. Искались wizard/installer/EFI builder, kernel patches, GPU kext и конкретные laptop EFI.
+Проверены на 2026-10-19: Dortania OpenCore Install Guide, Hardware Limitations, AMD guide, GPU Buyers Guide и Wireless Buyers Guide; GitHub README/issues/projects AMD_Vanilla, ChefKissInc/NootedRed, ChefKissInc/NootRX, lzhoang2801/OpCore-Simplify, corpnewt/UnPlugged, OCAuxiliaryTools, HackinOS OpenCoreBuilder и RedmiBookPro2022 EFI; targeted searches по G513RM, 6800H, 680M, Rembrandt, OpenCore и macOS. Искались wizard/installer/EFI builder, kernel patches, GPU kext и конкретные laptop EFI.
 
 Это не доказывает, что не существует закрытых, удалённых, неиндексируемых или неанглоязычных EFI. Охват — открытые индексируемые источники, не каждый форум, видео, Telegram или Discord. Не выполнены: бинарный аудит всех EFI; запуск macOS на G513RM; проверка NootedRed на реальном железе; измерение Metal/ускорения; разбор ACPI/DSDT и схемы платы; точная идентификация Ethernet/аудио/панели/MUX по live hardware report; физические тесты сна, USB, температуры и батареи; юридическая экспертиза лицензий. Формулировка «готовой EFI нигде нет» ограничена именно охваченным поиском.
 
@@ -107,7 +107,7 @@
 10. [ChefKissInc/NootRX](https://github.com/ChefKissInc/NootRX)
 11. [lzhoang2801/OpCore-Simplify](https://github.com/lzhoang2801/OpCore-Simplify)
 12. [OpCore Simplify issue #644: unsupported GPU/VESA](https://github.com/lzhoang2801/OpCore-Simplify/issues/644)
-13. [lzhoang2801/UnPlugged](https://github.com/lzhoang2801/UnPlugged)
+13. [corpnewt/UnPlugged](https://github.com/corpnewt/UnPlugged)
 14. [ic005k/OCAuxiliaryTools](https://github.com/ic005k/OCAuxiliaryTools)
 15. [ihackinOS/OpenCoreBuilder](https://github.com/ihackinOS/OpenCoreBuilder)
 16. [copws/RedmiBookPro2022-Ryzen-Hackintosh-EFI](https://github.com/copws/RedmiBookPro2022-Ryzen-Hackintosh-EFI)
