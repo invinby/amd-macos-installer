@@ -88,7 +88,7 @@ Apple Developer Documentation описывает Virtualization framework для
 - `HypervisorPresent=True`: Windows сообщает, что гипервизор уже присутствует. Это не подтверждает macOS-гостя; точная причина/настройка через WMI не установлена.
 - Запрос состояния Windows optional feature Hyper-V потребовал повышения прав; администраторский запрос не выполнялся.
 
-В этом снимке не выключались функции безопасности, Hyper-V/VBS, Secure Boot и настройки UEFI. В проект скачаны OC4VM 3.0.1, OpenCorePkg 1.0.8, Monterey Recovery и QEMU Windows installer для преобразования Recovery. VMware Workstation пока не установлен: официальный портал требует вход в аккаунт и принятие условий загрузки. Локальная VM-копия находится в `vm/Monterey12-test/` и исключена из Git; она пока не запускалась.
+В этом снимке не выключались функции безопасности, Hyper-V/VBS, Secure Boot и настройки UEFI. В проект скачаны OC4VM 3.0.1, OpenCorePkg 1.0.8, Monterey Recovery и QEMU Windows installer для преобразования Recovery. VMware Workstation пока не установлен: официальный портал требует вход в аккаунт и принятие условий загрузки. Локальная VM-копия находится в `vm/Monterey12-test/` и исключена из Git; Recovery VMDK уже прикреплён, запуск ждёт Workstation.
 
 ## Источники и версии
 
@@ -101,4 +101,3 @@ Apple Developer Documentation описывает Virtualization framework для
 - Oracle VirtualBox User Guide 7.2, актуальная платформа/гостевые ОС: https://docs.oracle.com/en/virtualization/virtualbox/7.2/user/Introduction.html; User Guide 7.1, 2025-11, явные предупреждения о macOS guests: https://docs.oracle.com/en/virtualization/virtualbox/7.1/user/BasicConcepts.html
 - Broadcom KB 315260, macOS guest support in Fusion: https://knowledge.broadcom.com/external/article/315260
 - QEMU documentation, WHPX: https://www.qemu.org/docs/master/system/whpx.html
-

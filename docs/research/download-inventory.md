@@ -37,10 +37,10 @@
 - Установщик: `downloads/third-party/qemu-windows-11.1.0/qemu-w64-setup-20260811.exe`, 206,615,928 байт.
 - SHA-512: `5BCF9EED634E8575A37B74F445AF41A2FE4106DA512D0C30C368301D4C105037FDFAB40A5287367A28A957624CDDEBBC8C07E16C88AB6634F554CDF3D16BF543` — совпал с manifest рядом.
 - SHA-256: `F98A8AEB5F7FAEA9765B6DEE28316C266CD179D80354A2FED8E50176F9A2E59F` — независимо совпал с manifest пакета WinGet `SoftwareFreedomConservancy.QEMU`.
-- Authenticode подпись показывает издателя Universität Mannheim, но срок сертификата закончился в 2023; Windows status `UnknownError`. Установщик пока не запускался. Сборка нужна только для qemu-img, чтобы подготовить Recovery VMDK.
+- Authenticode подпись показывает издателя Universität Mannheim, но срок сертификата закончился в 2023; Windows status `UnknownError`. Установщик запущен после сверки обоих хешей; QEMU локально установлен в `downloads/third-party/qemu-windows-11.1.0/installed/`. Подпись имеет просроченный сертификат, поэтому факт установки отмечен отдельно. Использован только `qemu-img` для конвертации Apple Recovery в VMDK внутри `vm/Monterey12-test/`.
 ## Пока не скачано
 
 - VMware Workstation installer: пока не скачан. Официальный Broadcom download перенаправляет на вход, требует принять условия загрузки и иногда отдельную Trade Compliance проверку.
-- Полный macOS installer и рабочая VM пока отсутствуют.
+- VMware Workstation installer ещё не скачан; без него VM пока не запускалась. Полный установщик Monterey будет загружаться из Apple Recovery после старта VM.
 
 Системные образы и созданные VM не коммитить в Git.
