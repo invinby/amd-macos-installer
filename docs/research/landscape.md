@@ -58,6 +58,36 @@
 
 «Дошёл до установщика» не означает «есть драйвер», а EFI-папка не означает совместимый GPU.
 
+## Проброс видеокарты и собственный драйвер (проверено 20 октября 2026)
+
+Снял Hardware ID с этого ноутбука через Windows PnP:
+
+- AMD Radeon 680M: 1002:1681 (Rembrandt / RDNA 2 iGPU).
+- NVIDIA RTX 3060 Laptop: 10DE:2520 (Ampere).
+
+Запущенный QEMU сейчас показывает гостю vmware-svga — виртуальный видеоадаптер из аргументов запуска. Это не проброс 680M. Текущая медлительность идёт прежде всего от QEMU TCG: он исполняет CPU-код гостя программно, поэтому настройка видеокарты сама по себе это не исправит.
+
+### Что даёт каждый маршрут
+
+| Маршрут | Что он может дать | Что ему мешает здесь |
+| --- | --- | --- |
+| QEMU WHPX | Ускорение CPU-виртуализации на Windows | Предыдущая попытка завершилась Unexpected VP exit code 4; это надо отдельно отлаживать. WHPX не пробрасывает Radeon и не даёт macOS-драйвер. |
+| PCI passthrough 680M | Доступ гостя к физическому устройству в некоторых гипервизорах/ОС-хостах | Не решает отсутствие рабочего macOS-драйвера для Rembrandt. Для Windows + WHPX готовый поддерживаемый маршрут passthrough не установлен. |
+| VMware SVGA / виртуальная 3D-графика | Может ускорить только то, что поддерживают гипервизор и guest-драйвер | Не тождественно Radeon 680M/Metal. Нельзя считать рабочим ускорением macOS, пока в госте не подтверждены framebuffer, QE/Metal и нагрузочный тест. |
+| Загрузить драйвер в macOS | Единственный путь к нативному ускорению этой iGPU | Готового драйвера для 680M не найдено; нужен полноценный порт графического стека. |
+
+### Состояние готовых компонентов
+
+- NootedRed issue #92 (https://github.com/ChefKissInc/NootedRed/issues/92) остаётся открытой задачей поддержки RDNA 1/2 iGPU; в актуальной карточке указаны высокий объём работ и заблокированный статус. Issue #285 (https://github.com/ChefKissInc/NootedRed/issues/285) прямо посвящена Ryzen 7 6800H / Radeon 680M и закрыта как дубль этой общей задачи.
+- NootRX (https://github.com/ChefKissInc/NootRX) — проект для дискретных RDNA 2 карт; его нельзя просто подключить как драйвер 680M.
+- Найден MetalGPUDrivers (https://github.com/winkleplex10-bit/MetalGPUDrivers), небольшой исследовательский репозиторий. Его README сообщает, что начат отдельный контроллер для другой RDNA 2 APU (Raphael 1002:164E), но пока нет GFX-командного кольца, AIR→gfx1036 и QE/Metal; целевая ОС проекта — macOS 26. Это не готовый драйвер 680M. У репозитория в README лицензия помечена TBD, поэтому код нельзя переносить в наш проект до выяснения прав.
+
+### Реальный план по 680M
+
+Сначала добиваем проверяемый VM-экран, отдельно пробуем разобраться с WHPX и снимаем гостевой профиль видеоустройства. Для настоящего драйвера нужен отдельный проект и стенд на самом ноутбуке; VM с vmware-svga его не проверит. Этапы собственного порта: получить логи/PCI и VBIOS/ATOM сведения → запустить устройство и firmware/PSP → вывести простой framebuffer → поднять управление питанием и дисплейным блоком Rembrandt → только затем исследовать IOAccelerator/Metal и командную очередь. «Картинка через framebuffer» ещё не означает аппаратное ускорение Metal.
+
+RTX 3060 проблему не закрывает: это отдельное NVIDIA Ampere устройство, а macOS-драйвера для него нет; плюс на ноутбуке надо отдельно установить физическую схему дисплейного MUX. Для QEMU первым разумным ускорением остаётся починить CPU backend WHPX, а не передавать неподдерживаемую GPU.
+
 ## NVIDIA RTX 3060 и дисплейная схема
 
 [Dortania NVIDIA GPU Buyers Guide](https://dortania.github.io/GPU-Buyers-Guide/modern-gpus/nvidia-gpu.html) относит RTX 3060 / Ampere к неподдерживаемым macOS GPU: драйверов не было даже для High Sierra. [Hardware Limitations](https://dortania.github.io/OpenCore-Install-Guide/macos-limits.html) предупреждает, что большинство laptop dGPU подключены через switchable graphics/Optimus и не пригодны для внутренней матрицы macOS.
@@ -113,3 +143,5 @@
 16. [copws/RedmiBookPro2022-Ryzen-Hackintosh-EFI](https://github.com/copws/RedmiBookPro2022-Ryzen-Hackintosh-EFI)
 17. [OpenIntelWireless/itlwm](https://github.com/OpenIntelWireless/itlwm)
 18. [ASUS G513RM support page](https://www.asus.com/us/supportonly/g513rm/helpdesk_service_guide/)
+
+19. [MetalGPUDrivers README: незавершённый Raphael RDNA2 iGPU прототип](https://github.com/winkleplex10-bit/MetalGPUDrivers)

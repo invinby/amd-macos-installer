@@ -40,7 +40,7 @@
 - Authenticode подпись показывает издателя Universität Mannheim, но срок сертификата закончился в 2023; Windows status `UnknownError`. Установщик запущен после сверки обоих хешей; QEMU локально установлен в `downloads/third-party/qemu-windows-11.1.0/installed/`. Подпись имеет просроченный сертификат, поэтому факт установки отмечен отдельно. Использован только `qemu-img` для конвертации Apple Recovery в VMDK внутри `vm/Monterey12-test/`.
 ## Пока не скачано
 
-- VMware Workstation installer: пока не скачан. Официальный Broadcom download перенаправляет на вход, требует принять условия загрузки и иногда отдельную Trade Compliance проверку.
-- VMware Workstation installer ещё не скачан; без него VM пока не запускалась. Полный установщик Monterey будет загружаться из Apple Recovery после старта VM.
+- VMware Workstation installer: пока не скачан. Broadcom-аккаунт зарегистрирован и вошёл в портал. Официальный каталог бесплатных программ: `https://support.broadcom.com/group/ecx/free-downloads`; маршрут из аккаунта: My Downloads → Free Software Downloads available HERE → VMware Workstation Pro. Загрузка может ожидать экспортной проверки профиля.
+- VMware Workstation VM пока не запускалась: installer не скачан. В качестве технического fallback проверяется QEMU WHPX с теми же OpenCore/Recovery компонентами; запущен отдельный QEMU VM-процесс, итог загрузки ещё не подтверждён. Для fallback Recovery VMDK был скопирован в `vm/Monterey12-test/qemu-recovery.vmdk`; исходный Recovery VMDK не изменён. Полный установщик Monterey должен загружаться из Apple Recovery после запуска гостя.
 
 Системные образы и созданные VM не коммитить в Git.

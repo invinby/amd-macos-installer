@@ -2,3 +2,5 @@
 downloads/
 
 vm/
+__pycache__/
+*.py[cod]
